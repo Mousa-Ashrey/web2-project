@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Game</title>
+        <link rel="stylesheet" href="stylesheet1.css">
+  
+    </head>
+    <body>
+        <div id="parent">
+            <h1>Game</h1>
+            <label>Number of Boxes: </label>
+            <input type="number" id="userValue">
+            <input type="button" value="Generate" id="generate">
+            <br>
+            <div id="child"></div>
+        </div>
+    </body>
+    <script>
+        var generateBtn = document.getElementById("generate");
+        generateBtn.addEventListener("click" , function(e){
+            var userValue = parseInt(document.getElementById("userValue").value,10);
+			var rand = Math.floor(Math.random()* userValue);
+			var num = 0;
+            var showDiv = document.getElementById("child");
+            if(userValue>=1){
+                showDiv.innerHTML="";
+                var array = [];
+                for(var i=0;i<userValue;i++){
+                    var newBtn = document.createElement("button");
+                    newBtn.style.margin="20px";
+                    newBtn.style.border="solid 1px rgb(51, 21, 221)"
+                    newBtn.style.backgroundColor="rgb(51, 21, 221)";
+                    newBtn.setAttribute("class","selectedBtn");
+					newBtn.setAttribute("data-index",i);
+                    showDiv.appendChild(newBtn);
+                }
+                var btnsArray = document.getElementsByTagName("button");
+
+                for(var i=0;i<btnsArray.length;i++){
+                    btnsArray[i].addEventListener("click",function(e){
+						if(parseInt(e.currentTarget.dataset.index) == rand){
+							num++;
+							var nodeText = document.createTextNode("Contains a hidden gift");
+							btnsArray[parseInt(event.currentTarget.dataset.index)].appendChild(nodeText);
+							alert("You win in " + num + " steps");
+						}
+						else{
+							num++;
+						}
+                    });
+                }
+            }
+            else{
+                alert("Invalid Input");
+                var userInp = document.getElementById("userValue");
+                userInp.value="";
+            }
+            
+        });
+    </script>
+</html>
